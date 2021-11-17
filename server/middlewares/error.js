@@ -7,6 +7,7 @@ const notFoundErrorHandler = (req, res) => {
   });
 };
 
+// eslint-disable-next-line no-unused-vars
 const generalErrorHandler = (error, req, res, next) => {
   if (error instanceof ValidationError) {
     error.code = 401;
@@ -15,7 +16,7 @@ const generalErrorHandler = (error, req, res, next) => {
   debug(`Tuit-tuit. Ha habido un error: ${error.message}`);
   const message = error.code
     ? error.message
-    : "Error. Peligro. Ha habido un pete general.";
+    : "Tuit-tuit. Ha habido un pete general.";
   res.status(error.code || 500).json({ error: message });
 };
 

@@ -3,7 +3,11 @@ const debug = require("debug")("tuits:server");
 const express = require("express");
 const morgan = require("morgan");
 const cors = require("cors");
-const { notFoundErrorHandler, generalErrorHandler } = require("./error");
+const {
+  notFoundErrorHandler,
+  generalErrorHandler,
+} = require("./middlewares/error");
+const tuitRoutes = require("./routes/tuitRoutes");
 
 const app = express();
 
