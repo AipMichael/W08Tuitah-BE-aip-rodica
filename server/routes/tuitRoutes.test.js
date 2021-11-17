@@ -54,7 +54,7 @@ describe("Given a /tuits router,", () => {
     test("Then it should send a respond with the requested tuits", async () => {
       const { body } = await request;
 
-      expect(myTuits).toBeDefined();
+      expect(myTuits).toBeDefined(); //to be in the document
     });
   });
 });
