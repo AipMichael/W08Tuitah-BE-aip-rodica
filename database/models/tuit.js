@@ -6,15 +6,15 @@ const tuitSchema = new Schema({
     required: true,
   },
   likes: {
-    type: number,
+    type: Number,
     required: true,
   },
   date: {
-    type: date,
+    type: Date,
     required: true,
   },
 });
 
-const Tuit = model("tuit", userSchema, "tuits");
+const Tuit = model("tuit", tuitSchema, "tuits");
 
 module.exports = Tuit;
