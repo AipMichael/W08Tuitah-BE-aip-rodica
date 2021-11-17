@@ -11,8 +11,8 @@ const connectDB = () =>
         debug(
           chalk.red("Tuitah-error. La base de datos no ha podido iniciarse.")
         );
-        reject();
-        return;
+        debug(chalk.red(error.message));
+        reject(error);
       }
       debug(chalk.green("Tuitah-tención. Conectado a la base de datos"));
       resolve();
