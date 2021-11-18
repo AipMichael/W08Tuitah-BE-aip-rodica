@@ -2,10 +2,10 @@ require("dotenv").config();
 const debug = require("debug")("user:routes:tests");
 const chalk = require("chalk");
 const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+
 const supertest = require("supertest");
 const initializeDB = require("../../database");
-const User = require("../../database/models/user");
+const Tuit = require("../../database/models/tuit");
 const { initializeServer } = require("../index");
 const { app } = require("../index");
 
@@ -14,6 +14,8 @@ jest.setTimeout(20000);
 const request = supertest(app);
 
 let server;
+let myTuits;
+let newDate;
 
 beforeAll(async () => {
   await initializeDB(process.env.MONGO_DB_STRING_TEST);
@@ -25,17 +27,18 @@ beforeEach(async () => {
     {
       text: "soy una reina tuitera. Cuidado que lo peto",
       likes: 5,
-      date: new Date(),
+      date: newDate,
     },
     {
       text: "yendo a comer tacos al pastor.",
       likes: 10,
-      date: new Date(),
+      date: newDate,
     },
   ];
-  await User.deleteMany();
-  await User.create(myUsers[0]);
-  await User.create(myUsers[1]);
+  newDate = new Date();
+  await Tuit.deleteMany();
+  await Tuit.create(myTuits[0]);
+  await Tuit.create(myTuits[1]);
 });
 
 afterAll(async () => {
@@ -51,10 +54,15 @@ afterAll(async () => {
 
 describe("Given a /tuits router,", () => {
   describe("When it gets a GET request for /tuits", () => {
-    test("Then it should send a respond with the requested tuits", async () => {
-      const { body } = await request;
+    test("Then it should send a respond an array of robots and a 200 status", async () => {
+      const { body } = await request.get("/robots").expect(200);
 
-      expect(myTuits).toBeDefined(); //to be in the document
+      expect(body).toHaveLength(2);
+      expect(body).toContainEqual({
+        text: "soy una reina tuitera. Cuidado que lo peto",
+        likes: 5,
+        date: newDate,
+      });
     });
   });
 });
