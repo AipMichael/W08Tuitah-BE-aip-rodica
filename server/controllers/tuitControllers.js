@@ -20,12 +20,21 @@ const createTuit = async (req, res, next) => {
 };
 
 const deleteTuit = async (req, res, next) => {
-  const { id } = req.body;
+  const { id } = req.params;
   try {
-    const tuitToDelete = await Tuit.deleteOne({id});
-    res.json(tuitToDelete);
+    const tuitToDelete = await Tuit.findByIdAndDelete(id);
+    console.log(tuitToDelete);
+    if (tuitToDelete) {
+      res.json({id: tuitToDelete.id});
+    } else {
+      const error = new Error("Tuit not found");
+      error.code = 404;
+      next(error);
+    }
   } catch (error) {
     debug(chalk.red(error));
+    error.code = 400;
+    error.message = "Bad request";
     next(error);
   }
   
