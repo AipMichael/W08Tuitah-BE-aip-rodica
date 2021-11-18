@@ -19,8 +19,21 @@ const createTuit = async (req, res, next) => {
   }
 };
 
+const deleteTuit = async (req, res, next) => {
+  const { id } = req.body;
+  try {
+    const tuitToDelete = await Tuit.deleteOne({id});
+    res.json(tuitToDelete);
+  } catch (error) {
+    debug(chalk.red(error));
+    next(error);
+  }
+  
+}
+
 
 module.exports={
   getTuits,
   createTuit,
+  deleteTuit,
 };
