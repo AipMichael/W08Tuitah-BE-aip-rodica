@@ -1,5 +1,11 @@
 const express = require("express");
-const { getTuits, createTuit, deleteTuit } = require("../controllers/tuitControllers");
+
+const {
+  getTuits,
+  createTuit,
+  deleteTuit,
+} = require("../controllers/tuitControllers");
+
 
 const router = express.Router();
 
